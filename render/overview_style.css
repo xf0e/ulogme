@@ -1,16 +1,18 @@
 body {
-  font-family: Impact, Charcoal, sans-serif;
-  color: #333;
+  font-family: PragmataPro;
+  src: url('PragmataPro.ttf');
+  color: #000;
   font-size: 20px;
   margin: 0;
   padding: 0;
+  background-color: #D8D7D6;
 }
 h1 {
   text-align: center;
   color: #FFF;
   font-size: 40px;
   font-weight: normal;
-  background-color: #F55;
+  background-color: #474D6E;
   margin: 0;
   padding: 20px;
 }
@@ -26,7 +28,7 @@ h1 {
   top: 25px;
   right: 100px;
   font-weight: normal;
-  font-family: 'Lato', sans-serif;
+  font-family: PragmataPro;
 }
 #indexlink a {
   color: #FFF;

@@ -1,13 +1,15 @@
 body {
-  font-family: Impact, Charcoal, sans-serif;
+  font-family: PragmataPro;
+  src: url('PragmataPro.ttf');
   color: #333;
   font-size: 20px;
   margin: 0;
   padding: 0;
+  background-color: #D8D7D6;
 }
 g {
- font-size: 14px; 
- font-family: 'arial';
+ font-size: 14px;
+ font-family: 'PragmataPro';
 }
 p {
   margin: 0;
@@ -33,7 +35,7 @@ p {
 }
 .line {
   fill: none;
-  stroke: #55F;
+  stroke: #F70000;
   stroke-width: 1px;
 }
 .al {
@@ -50,9 +52,9 @@ p {
 h2 {
   text-align: center;
   margin-bottom: 40px;
-  font-family: 'Lato', sans-serif;
+  font-family: PragmataPro;
   font-weight: 300;
-  background-color: #FFA;
+  background-color: #7882BA;
   margin: 0;
   padding: 20px;
   box-shadow: 0px 0px 3px 0px #AAA;
@@ -62,7 +64,7 @@ h1 {
   color: #FFF;
   font-size: 40px;
   font-weight: normal;
-  background-color: #F55;
+  background-color: #474D6E;
   margin: 0;
   padding: 20px;
 }
@@ -85,11 +87,11 @@ h1 {
   -moz-user-select: none;     /* Firefox all */
   -ms-user-select: none;      /* IE 10+ */
   -o-user-select: none; /* not yet supported well */
-  user-select: none;   
+  user-select: none;
 }
 #notesinfo {
   font-size: 16px;
-  font-family: 'arial';
+  font-family: PragmataPro;
   background-color: #FFA;
   border: 1px solid #EE9;
   padding: 10px;
@@ -105,7 +107,7 @@ h1 {
   -moz-user-select: none;     /* Firefox all */
   -ms-user-select: none;      /* IE 10+ */
   -o-user-select: none; /* not yet supported well */
-  user-select: none;   
+  user-select: none;
   color: #AA5;
 }
 #reloadbutton {
@@ -149,7 +151,7 @@ input[type="text"] {
   top: 25px;
   right: 100px;
   font-weight: normal;
-  font-family: 'Lato', sans-serif;
+  font-family: PragmataPro;
 }
 #overviewlink a {
   color: #FFF;
@@ -186,11 +188,11 @@ pre {
   height: 40px;
 }
 #piechart text {
-  font-family: Impact, Charcoal, sans-serif;
+  font-family: PragmataPro;
   font-size: 20px;
 }
 #keystats text {
-  font-family: Impact, Charcoal, sans-serif;
+  font-family: PragmataPro;
   font-size: 20px;
   fill: #333;
 }
