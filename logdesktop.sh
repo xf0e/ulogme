@@ -13,7 +13,7 @@ mkdir -p desktopscr
 
 while true
 do
-	islocked=true; if [[ $(gnome-screensaver-command -q) =~ .*inactive.* ]]; then islocked=false; fi
+	islocked=true; if [[ $(qdbus org.kde.screensaver /ScreenSaver org.freedesktop.ScreenSaver.GetActive) =~ .*false.* ]]; then islocked=false; fi
 
 	if ! $islocked
 	then
@@ -28,5 +28,3 @@ do
 
 	sleep $waittime
 done
-
-
