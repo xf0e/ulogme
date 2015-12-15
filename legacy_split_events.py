@@ -1,3 +1,4 @@
+#!/usr/bin/python2
 # convert old type events to new type events, in case you used legacy ulogme code
 # where all events were written to one file based on type. In new version these are
 # split also by date.
