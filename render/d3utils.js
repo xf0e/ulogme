@@ -26,13 +26,26 @@ var d3utils = {};
     if(title !== '') {
       div.append('p').attr('class', 'pietitle').text(title);
     }
-    
+
     var arc = d3.svg.arc()
       .outerRadius(r)
-      .innerRadius(0);
+      .innerRadius(50);
+
+    var arcLarge = d3.svg.arc()
+        .innerRadius(50)
+        .outerRadius(r + 50);
+
+    var toggleArc = function(p){
+      p.state = !p.state;
+    var dest = p.state ? arcLarge : arc;
+
+    d3.select(this).select("path").transition()
+      .duration(500)
+      .attr("d", dest);};
 
     var pie = d3.layout.pie()
       .sort(null)
+      .padAngle(.02)
       .value(function(d) { return d.val; });
 
     var svg = d3.select("#piechart").append("svg")
@@ -44,20 +57,25 @@ var d3utils = {};
     var g = svg.selectAll(".arc")
       .data(pie(chart_data.data))
       .enter().append("g")
-      .attr("class", "arc");
+      .attr("class", "arc")
+      .attr("stroke", "black")
+      .attr("id",function(d){return d.data;})
+      .on("mouseover",toggleArc)
+      .on("mouseout",toggleArc);
 
     g.append("path")
       .attr("d", arc)
       .style("fill", function(d) { return d.data.col; });
 
     g.append("text")
+        .attr("stroke", "none")
       .attr("fill", function(d) { return d.data.col; })
-      .attr("transform", function(d) { 
+      .attr("transform", function(d) {
         var c = arc.centroid(d);
         var x = c[0];
         var y = c[1];
         var h = Math.sqrt(x*x + y*y);
-        return "translate(" + (x/h * (r + textmargin)) +  ',' + (y/h * (r + textmargin)) +  ")"; 
+        return "translate(" + (x/h * (r + textmargin)) +  ',' + (y/h * (r + textmargin)) +  ")";
       })
       .attr("dy", ".35em")
 
@@ -97,18 +115,27 @@ var d3utils = {};
     var g = svg.selectAll(".b")
       .data(chart_data.data)
       .enter().append("g")
-      .attr("class", "b");
+      .attr("class", "b")
+      .on('mouseover', function(d){l
+    var nodeSelection = d3.select(this).style({opacity:'0.8'});
+    nodeSelection.select("b").style({opacity:'0.9'});
+})
+      .on('mouseout', function(d){
+    var nodeSelection1 = d3.select(this).style({opacity:'1.0'});
+    nodeSelection1.select("b").style({opacity:'1.0'});
+});
 
     g.append("rect")
       .attr("x", function(d) { return 0.0; } )
       .attr("width", function(d) { return d.val * sx; } )
       .attr("y", function(d,i) { return i * bh; })
-      .attr("height", bh)
+      .attr("height", bh-3)
+      .attr("stroke", "black")
       .attr("fill", function(d) { return d.col; });
-      
+
     g.append("text")
       .attr("transform", function(d, i) { return "translate(" + (d.val * sx + textmargin) + "," + ((i+1) * bh - textoffy) + ")"; })
-      .text(function(d) { return d.text });   
+      .text(function(d) { return d.text });
   }
 
   // exports
