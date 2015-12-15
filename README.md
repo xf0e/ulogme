@@ -1,5 +1,5 @@
 
-# ulogme
+# Fork of ulogme
 
 
 > ### How productive were you today? How much code have you written? Where did your time go?
@@ -44,28 +44,11 @@ The user interface can switch between a single day view and an overview view by 
 
 #### Overview page
 
-- You can click the window titles to toggle them on and off from the visualization 
+- You can click the window titles to toggle them on and off from the visualization
 - Clicking on the vertical bars takes you to the full statistics for that day.
 
 ## Known issues
 - One Ubuntu user reported broken view with no data. On further inspection we found that the logs were corrupt. One of the lines in a file in `/logs` was, instead of looking as `{timestamp} {data}`  looked as `@@@@@@@{timestamp} {data}`, in other words an odd character was appended to the timestamp somehow. We manually erased these characters from the log file to fix the issue.
 - Legacy code note: if you used ulogme from before 28 July, you will have to run `$ python legacy_split_events.py` to convert your events files, once.
 - You may see *"address already in use"* if you try to run `python ulogme_serve.py`. Sometimes the system can get confused and takes a while to update what ports are being used. Use the optional argument to specify a different port, for example `python ulogme_serve.py 8124` and then go to `http://localhost:8124` instead, for example.
-- Overview page is blank. Are you sure your browser supports ECMAScript 6? Chrome should be fine, Firefox might not be, yet. 
-
-## Contributing
-
-The Ubuntu and OSX code base are a little separate on the data collection side. However, they each just record very simple log files in `/logs`. Once the log files are written, `export_events.py` takes the log files, does some simple processing and writes the results into `.json` files in `/render`. The Javascript/HTML/CSS UI codebase is all common and all lives in `/render`.
-
-### Ubuntu
-ulogme has three main parts: 
-
-1. Recording scripts `keyfreq.sh` and `logactivewin.sh`. You probably won't touch these.
-2. Webserver: `ulogme_serve.py` which wraps Python's `SimpleHTTPServer` and does some basic communication with the UI. For example, the UI can ask the server to write a note to a log file, or for a refresh.
-3. The UI. Majority of the codebase is here, reading the `.json` files in `/render` and creating the visualizations. There are several common `.js` files, and crucially the `index.html` and `overview.html` files. I expect that most people might be able to contribute here to add features/cleanup/bugfix.
-
-### OSX code
-Things get a little ugly in OSX if you want to change anything with recording the log files because you have to recompile these portions any time you make any changes. It's ugly and it had to be done. However, if you're only interested in hacking with the UI, just change Javascript in `render` and no recompile is necessary, naturally.
-
-## License
-MIT
+- Overview page is blank. Are you sure your browser supports ECMAScript 6? Chrome should be fine, Firefox might not be, yet.
