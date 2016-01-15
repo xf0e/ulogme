@@ -20,7 +20,7 @@ kde_is_runnung=false; if [[ $(echo $XDG_CURRENT_DESKTOP) =~ .*KDE.* ]]; then kde
 #echo -n "logactivewin started"
 while true
 do
-    if [ $kde_is_runnung=true ]; then
+    if [ $kde_is_runnung = true ]; then
         islocked=true; if [[ $(/usr/bin/qdbus org.kde.screensaver /ScreenSaver org.freedesktop.ScreenSaver.GetActive) =~ .*false.* ]]; then islocked=false; fi
     else
         islocked=true; if [[ $(gnome-screensaver-command -q) =~ .*inactive.* ]]; then islocked=false; fi
@@ -29,8 +29,7 @@ do
     if [ $islocked = true ]; then
 	curtitle="__LOCKEDSCREEN"
     else
-	id=$(xdotool getactivewindow)
-	curtitle=$(wmctrl -lpG | while read -a a; do w=${a[0]}; if (($((16#${w:2}))==id)) ; then echo "${a[@]:8}"; break; fi; done)
+	curtitle=$(xdotool getwindowfocus getwindowname)
     fi
 
     perform_write=false
