@@ -6,7 +6,7 @@
 LANG=en_US.utf8
 silent=true
 helperfile="logs/keyfreqraw" # temporary helper file
-
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 mkdir -p logs
 
 #echo -n "keyfreq started"
@@ -29,7 +29,7 @@ while true
         num=$(grep release $filesToGrep | wc -l)
             
         # append unix time stamp and the number into file
-        logfile="logs/keyfreq_$(python2 rewind7am.py).txt"
+        logfile="logs/keyfreq_$(python $DIR/rewind7am.py).txt"
         echo "$(date +%s) $num"  >> $logfile
         if [ "$silent" = false ]; then
             echo "logged key frequency: $(date) $num release events detected into $logfile"
