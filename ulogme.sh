@@ -8,5 +8,5 @@ else
   # Assume Linux
   $DIR/keyfreq.sh &
   $DIR/logactivewin.sh &
-  echo "ulogme has started"
+  logger ulogme tracking has been started
 fi
