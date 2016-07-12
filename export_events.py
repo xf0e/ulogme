@@ -1,20 +1,16 @@
 #!/usr/bin/python
-import time
-import datetime
+import glob
 import json
 import os
 import os.path
-import sys
-import glob
 
 
-def loadEvents(fname):
+def loadevents(fname):
   """
   Reads a file that consists of first column of unix timestamps
   followed by arbitrary string, one per line. Outputs as dictionary.
   Also keeps track of min and max time seen in global mint,maxt
   """
-  events = []
 
   try:
     ws = open(fname, 'r').read().splitlines()
@@ -22,8 +18,8 @@ def loadEvents(fname):
     for w in ws:
       ix = w.find(' ') # find first space, that's where stamp ends
       stamp = int(w[:ix])
-      str = w[ix+1:]
-      events.append({'t':stamp, 's':str})
+      string = w[ix + 1:]
+      events.append({'t':stamp, 's':string})
   except Exception as e:
     print('%s probably does not exist, setting empty events list.' % (fname, ))
     print('error was:')
@@ -40,37 +36,33 @@ def mtime(f):
   else:
     return 0
 
-def updateEvents():
+def updateevents():
   """
   goes down the list of .txt log files and writes all .json
   files that can be used by the frontend
   """
-  L = []
-  L.extend(glob.glob("logs/keyfreq_*.txt"))
-  L.extend(glob.glob("logs/window_*.txt"))
-  L.extend(glob.glob("logs/notes_*.txt"))
+  l = []
+  l.extend(glob.glob("logs/keyfreq_*.txt"))
+  l.extend(glob.glob("logs/window_*.txt"))
+  l.extend(glob.glob("logs/notes_*.txt"))
 
   # extract all times. all log files of form {type}_{stamp}.txt
-  ts = [int(x[x.find('_')+1:x.find('.txt')]) for x in L]
+  ts = [int(x[x.find('_')+1:x.find('.txt')]) for x in l]
   ts = list(set(ts))
   ts.sort()
 
-  mint = min(ts)
-  maxt = max(ts)
-
   # march from beginning to end, group events for each day and write json
-  ROOT = ''
-  RENDER_ROOT = os.path.join(ROOT, 'render')
-  os.system('mkdir -p ' + RENDER_ROOT) # make sure output directory exists
-  t = mint
+  root = ''
+  render_root = os.path.join(root, 'render')
+  os.system('mkdir -p ' + render_root) # make sure output directory exists
   out_list = []
   for t in ts:
     t0 = t
     t1 = t0 + 60*60*24 # 24 hrs later
-    fout = 'events_%d.json' % (t0, )
+    fout = "events_%d.json" % (t0,)
     out_list.append({'t0':t0, 't1':t1, 'fname': fout})
 
-    fwrite = os.path.join(RENDER_ROOT, fout)
+    fwrite = os.path.join(render_root, fout)
     e1f = 'logs/window_%d.txt' % (t0, )
     e2f = 'logs/keyfreq_%d.txt' % (t0, )
     e3f = 'logs/notes_%d.txt' % (t0, )
@@ -95,9 +87,9 @@ def updateEvents():
 
     if dowrite:
       # okay lets do work
-      e1 = loadEvents(e1f)
-      e2 = loadEvents(e2f)
-      e3 = loadEvents(e3f)
+      e1 = loadevents(e1f)
+      e2 = loadevents(e2f)
+      e3 = loadevents(e3f)
       for k in e2: k['s'] = int(k['s']) # int convert
 
       e4 = ''
@@ -108,10 +100,10 @@ def updateEvents():
       open(fwrite, 'w').write(json.dumps(eout))
       print('wrote ' + fwrite)
 
-  fwrite = os.path.join(RENDER_ROOT, 'export_list.json')
+  fwrite = os.path.join(render_root, 'export_list.json')
   open(fwrite, 'w').write(json.dumps(out_list))
   print('wrote ' + fwrite)
 
 # invoked as script
 if __name__ == '__main__':
-  updateEvents()
+  updateevents()

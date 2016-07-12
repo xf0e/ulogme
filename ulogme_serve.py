@@ -4,10 +4,8 @@ import http.server
 import sys
 import cgi
 import os
-import subprocess
 
-from export_events import updateEvents
-from rewind7am import rewindTime
+from export_events import updateevents
 
 # Port settings
 IP = "127.0.0.1"
@@ -36,9 +34,8 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
     if self.path == '/refresh':
       # recompute jsons. We have to pop out to root from render directory
       # temporarily. It's a little ugly
-      refresh_time = form.getvalue('time')
       os.chdir(rootdir) # pop out
-      updateEvents() # defined in export_events.py
+      updateevents() # defined in export_events.py
       os.chdir('render') # pop back to render directory
       result = 'OK'
       
@@ -48,7 +45,7 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
       note_time = form.getvalue('time')
       os.chdir(rootdir) # pop out
       os.system('echo %s | ./note.sh %s' % (note, note_time))
-      updateEvents() # defined in export_events.py
+      updateevents() # defined in export_events.py
       os.chdir('render') # go back to render
       result = 'OK'
 
@@ -58,9 +55,8 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
       if post is None: post = ''
       post_time = int(form.getvalue('time'))
       os.chdir(rootdir) # pop out
-      trev = rewindTime(post_time)
       open('logs/blog_%d.txt' % (post_time, ), 'w').write(post)
-      updateEvents() # defined in export_events.py
+      updateevents() # defined in export_events.py
       os.chdir('render') # go back to render
       result = 'OK'
     
