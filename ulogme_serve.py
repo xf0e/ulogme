@@ -4,6 +4,7 @@ import http.server
 import sys
 import cgi
 import os
+import inspect
 
 from export_events import updateevents
 
@@ -15,8 +16,8 @@ else:
   PORT = 8124
 
 # serve render/ folder, not current folder
-rootdir = os.getcwd()
-os.chdir('render')
+rootdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+os.chdir(rootdir+'/render')
 
 # Custom handler
 class CustomHandler(http.server.SimpleHTTPRequestHandler):
